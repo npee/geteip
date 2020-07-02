@@ -40,19 +40,19 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public Quiz updateQuiz(Long quizId, RequestQuizDto quizDto) {
-        return null;
+        return update(quizId, quizDto);
     }
 
     @Override
     public void deleteQuiz(Long quizId) {
     }
 
-    public Quiz save(RequestQuizDto quizDto) {
+    private Quiz save(RequestQuizDto quizDto) {
         Quiz quiz = update(null, quizDto);
         return quizJpaRepository.save(quiz);
     }
 
-    public Quiz update(Long quizId, RequestQuizDto quizDto) {
+    private Quiz update(Long quizId, RequestQuizDto quizDto) {
         return quizJpaRepository.save(Quiz.builder()
                 .quizId(quizId)
                 .year(quizDto.getYear())

@@ -44,19 +44,8 @@ public class QuizController {
 
     @PutMapping("/{quizId}")
     public SingleResult<Quiz> updateQuiz(@PathVariable Long quizId,
-                                         @RequestParam Long year,
-                                         @RequestParam String nth) {
-
-        Quiz quiz = Quiz.builder()
-                .quizId(quizId)
-                .year(year)
-                .nth(nth)
-                .question("test")
-                .image("empty")
-                .isCorrect("false")
-                .build();
-        quizJpaRepository.save(quiz);
-        return responseService.getSingleResult(quiz);
+                                         @RequestBody RequestQuizDto quizDto) {
+        return responseService.getSingleResult(quizService.updateQuiz(quizId, quizDto));
     }
 
     @DeleteMapping("/{quizId}")

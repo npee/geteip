@@ -1,20 +1,16 @@
 package com.npee.eip.controller;
 
+import com.npee.eip.advice.exception.CustomQuizNotExistsException;
 import com.npee.eip.config.response.CommonResult;
 import com.npee.eip.config.response.ResponseService;
 import com.npee.eip.config.response.SingleResult;
 import com.npee.eip.model.entity.Quiz;
-import com.npee.eip.model.entity.Subject;
 import com.npee.eip.repository.QuizJpaRepository;
-import com.npee.eip.repository.SubjectJpaRepository;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import java.time.LocalDateTime;
 
 @Api(tags = {"2. Quiz"})
@@ -36,7 +32,7 @@ public class QuizController {
     @GetMapping("/{id}")
     public SingleResult<Quiz> getSelectedQuiz(@PathVariable Long id) {
 
-        Quiz quiz = quizJpaRepository.findById(id).get();
+        Quiz quiz = quizJpaRepository.findById(id).orElseThrow(CustomQuizNotExistsException::new);
         return responseService.getSingleResult(quiz);
     }
 

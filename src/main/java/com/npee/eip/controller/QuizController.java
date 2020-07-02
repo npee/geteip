@@ -54,7 +54,7 @@ public class QuizController {
     public SingleResult<Quiz> updateQuiz(@PathVariable Long quizId,
                                          @RequestParam Long year,
                                          @RequestParam String nth) {
-
+        // 수정
         Quiz quiz = Quiz.builder()
                 .quizId(quizId)
                 .year(year)

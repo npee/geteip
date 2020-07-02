@@ -1,5 +1,6 @@
 package com.npee.eip.model.entity;
 
+import com.npee.eip.model.entity.common.BaseTime;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "quizzes")
-public class Quiz {
+public class Quiz extends BaseTime {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long quizId;
@@ -40,14 +41,6 @@ public class Quiz {
 
     // @Column(nullable = false)
     // private Long countIncorrect;
-
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime regDate;
-
-    @LastModifiedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime modDate;
 
     @OneToOne(mappedBy = "commentFromQuiz")
     private Comment quizFromComment;

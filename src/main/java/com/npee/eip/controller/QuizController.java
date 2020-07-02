@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Api(tags = {"2. Quiz"})
@@ -46,8 +45,23 @@ public class QuizController {
                 .question("test")
                 .image("empty")
                 .isCorrect("false")
-                .regDate(LocalDateTime.now().plusHours(6L))
-                .modDate(LocalDateTime.now().plusHours(6L))
+                .build();
+        quizJpaRepository.save(quiz);
+        return responseService.getSingleResult(quiz);
+    }
+
+    @PutMapping("/{quizId}")
+    public SingleResult<Quiz> updateQuiz(@PathVariable Long quizId,
+                                         @RequestParam Long year,
+                                         @RequestParam String nth) {
+
+        Quiz quiz = Quiz.builder()
+                .quizId(quizId)
+                .year(year)
+                .nth(nth)
+                .question("test")
+                .image("empty")
+                .isCorrect("false")
                 .build();
         quizJpaRepository.save(quiz);
         return responseService.getSingleResult(quiz);

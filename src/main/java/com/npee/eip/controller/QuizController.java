@@ -1,7 +1,7 @@
 package com.npee.eip.controller;
 
 import com.npee.eip.advice.exception.CustomQuizNotExistsException;
-import com.npee.eip.config.response.CommonResult;
+import com.npee.eip.config.response.ListResult;
 import com.npee.eip.config.response.ResponseService;
 import com.npee.eip.config.response.SingleResult;
 import com.npee.eip.model.entity.Quiz;
@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Api(tags = {"2. Quiz"})
 @RestController
@@ -23,10 +24,10 @@ public class QuizController {
     private final ResponseService responseService;
     private final QuizJpaRepository quizJpaRepository;
 
-
     @GetMapping
-    public CommonResult getQuizList() {
-        return responseService.getSuccessResult();
+    public ListResult<Quiz> getQuizList() {
+        List<Quiz> quizList  = quizJpaRepository.findAll();
+        return responseService.getListResult(quizList);
     }
 
     @GetMapping("/{id}")
@@ -49,7 +50,6 @@ public class QuizController {
                 .modDate(LocalDateTime.now().plusHours(6L))
                 .build();
         quizJpaRepository.save(quiz);
-
         return responseService.getSingleResult(quiz);
     }
 }

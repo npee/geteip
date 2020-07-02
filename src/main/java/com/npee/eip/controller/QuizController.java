@@ -9,19 +9,24 @@ import com.npee.eip.repository.QuizJpaRepository;
 import com.npee.eip.repository.SubjectJpaRepository;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.time.LocalDateTime;
 
 @Api(tags = {"2. Quiz"})
 @RestController
 @RequestMapping("/v1/quiz")
 @RequiredArgsConstructor
+@Slf4j
 public class QuizController {
 
     private final ResponseService responseService;
     private final QuizJpaRepository quizJpaRepository;
-    private final SubjectJpaRepository subjectJpaRepository;
+
 
     @GetMapping
     public CommonResult getQuizList() {
@@ -51,11 +56,4 @@ public class QuizController {
 
         return responseService.getSingleResult(quiz);
     }
-
-    @GetMapping("/subject/{subjectNo}")
-    public SingleResult<Subject> getSelectedSubject(@PathVariable Long subjectNo) {
-        Subject subject = subjectJpaRepository.findById(subjectNo).get();
-        return responseService.getSingleResult(subject);
-    }
-
 }

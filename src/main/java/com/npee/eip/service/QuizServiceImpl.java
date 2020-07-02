@@ -45,11 +45,12 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public void deleteQuiz(Long quizId) {
+        quizJpaRepository.deleteById(quizJpaRepository.findById(quizId)
+                .orElseThrow(CustomQuizNotExistsException::new).getQuizId());
     }
 
     private Quiz save(RequestQuizDto quizDto) {
-        Quiz quiz = update(null, quizDto);
-        return quizJpaRepository.save(quiz);
+        return quizJpaRepository.save(update(null, quizDto));
     }
 
     private Quiz update(Long quizId, RequestQuizDto quizDto) {

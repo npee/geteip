@@ -1,5 +1,6 @@
 package com.npee.eip.advice;
 
+import com.npee.eip.advice.exception.CustomQuizNotExistsException;
 import com.npee.eip.advice.exception.CustomSubjectNotExistsException;
 import com.npee.eip.config.response.CommonResult;
 import com.npee.eip.config.response.ResponseService;
@@ -25,6 +26,12 @@ public class ExceptionAdvice {
     protected CommonResult defaultException(HttpServletRequest request, Exception e) {
         return responseService.getFailResult(Integer.valueOf(getMessage("unKnown.code")), getMessage("unKnown.message"));
         // return responseService.getFailResult();
+    }
+
+    @ExceptionHandler(CustomQuizNotExistsException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult quizNotExistsException(HttpServletRequest request, CustomQuizNotExistsException e) {
+        return responseService.getFailResult(Integer.valueOf(getMessage("quizNotExists.code")), getMessage("quizNotExists.message"));
     }
 
     @ExceptionHandler(CustomSubjectNotExistsException.class)

@@ -4,13 +4,13 @@ unKnown:
   message : "An unknown error has occurred."
 userNotFound:
   code: "-1000"
-  message: "This user not exist."
+  message: "The user does NOT exist."
 signinFailed:
   code: "-1001"
-  message: "Your account does not exist or your ID or PASSWORD is incorrect."
+  message: "This account does not exist or your ID orPASSWORD is NOT correct."
 entryPointException:
   code: "-1002"
-  message: "You do not have permission to access this resource."
+  message: "You do NOT have permission to access this resource."
 accessDenied:
   code: "-1003"
   message: "A resource that can not be accessed with the privileges it has."
@@ -22,7 +22,7 @@ userExists:
   message: "The user already exists."
 quizNotExists:
   code: "-2000"
-  message: "The quiz not exists."
+  message: "The quiz does NOT exist."
 subjectNotExists:
   code: "-3000"
-  message: "The subject not exists."
+  message: "The subject does NOT exist."

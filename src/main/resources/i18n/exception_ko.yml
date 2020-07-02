@@ -23,6 +23,9 @@ userExists:
 quizNotExists:
   code: "-2000"
   message: "존재하지 않는 퀴즈입니다."
+quizTableEmpty:
+  code: "-2001"
+  message: "퀴즈 테이블이 비어있습니다."
 subjectNotExists:
   code: "-3000"
   message: "존재하지 않는 과목입니다."

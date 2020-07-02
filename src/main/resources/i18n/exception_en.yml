@@ -23,6 +23,9 @@ userExists:
 quizNotExists:
   code: "-2000"
   message: "The quiz does NOT exist."
+quizTableEmpty:
+  code: "-2001"
+  message: "Quiz table is empty"
 subjectNotExists:
   code: "-3000"
   message: "The subject does NOT exist."

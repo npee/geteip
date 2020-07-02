@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Api(tags = {"3. Subject"})
 @RestController
-@RequestMapping("/v1/subject")
+@RequestMapping("/v1/subjects")
 @RequiredArgsConstructor
 @Slf4j
 public class SubjectController {

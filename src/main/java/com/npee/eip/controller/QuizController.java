@@ -7,6 +7,7 @@ import com.npee.eip.config.response.ResponseService;
 import com.npee.eip.config.response.SingleResult;
 import com.npee.eip.model.entity.Quiz;
 import com.npee.eip.repository.QuizJpaRepository;
+import com.npee.eip.service.QuizServiceImpl;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +24,11 @@ public class QuizController {
 
     private final ResponseService responseService;
     private final QuizJpaRepository quizJpaRepository;
+    private final QuizServiceImpl quizService;
 
     @GetMapping
     public ListResult<Quiz> getQuizList() {
-        List<Quiz> quizList  = quizJpaRepository.findAll();
-        return responseService.getListResult(quizList);
+        return responseService.getListResult(quizService.selectQuizzes());
     }
 
     @GetMapping("/{quizId}")

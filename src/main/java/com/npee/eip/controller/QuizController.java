@@ -6,6 +6,7 @@ import com.npee.eip.config.response.ListResult;
 import com.npee.eip.config.response.ResponseService;
 import com.npee.eip.config.response.SingleResult;
 import com.npee.eip.model.entity.Quiz;
+import com.npee.eip.model.request.RequestQuizDto;
 import com.npee.eip.repository.QuizJpaRepository;
 import com.npee.eip.service.QuizServiceImpl;
 import io.swagger.annotations.Api;
@@ -37,17 +38,8 @@ public class QuizController {
     }
 
     @PostMapping
-    public SingleResult<Quiz> setQuiz(@RequestParam Long year,
-                                      @RequestParam String nth) {
-        Quiz quiz = Quiz.builder()
-                .year(year)
-                .nth(nth)
-                .question("test")
-                .image("empty")
-                .isCorrect("false")
-                .build();
-        quizJpaRepository.save(quiz);
-        return responseService.getSingleResult(quiz);
+    public SingleResult<Quiz> setQuiz(@RequestBody RequestQuizDto quizDto) {
+        return responseService.getSingleResult(quizService.insertQuiz(quizDto));
     }
 
     @PutMapping("/{quizId}")

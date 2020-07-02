@@ -1,13 +1,14 @@
 package com.npee.eip.service;
 
 import com.npee.eip.model.entity.Quiz;
+import com.npee.eip.model.request.RequestQuizDto;
 
 import java.util.List;
 
 public interface QuizService {
-    Quiz insertQuiz(Long year, String nth, String question, String image, String isCorrect);
+    Quiz insertQuiz(RequestQuizDto quizDto);
     List<Quiz> selectQuizzes();
     Quiz selectAQuiz(Long quizId);
-    Quiz updateQuiz(Long quizId, Long year, String nth, String question, String image, String isCorrect);
+    Quiz updateQuiz(Long quizId, RequestQuizDto quizDto);
     void deleteQuiz(Long quizId);
 }

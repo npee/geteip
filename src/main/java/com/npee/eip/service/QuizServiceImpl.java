@@ -3,6 +3,7 @@ package com.npee.eip.service;
 import com.npee.eip.advice.exception.CustomQuizNotExistsException;
 import com.npee.eip.advice.exception.CustomQuizTableEmptyException;
 import com.npee.eip.model.entity.Quiz;
+import com.npee.eip.model.request.RequestQuizDto;
 import com.npee.eip.repository.QuizJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +19,8 @@ public class QuizServiceImpl implements QuizService {
     private final QuizJpaRepository quizJpaRepository;
 
     @Override
-    public Quiz insertQuiz(Long year, String nth, String question, String image, String isCorrect) {
-
-        return null;
+    public Quiz insertQuiz(RequestQuizDto quizDto) {
+        return save(quizDto);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public Quiz updateQuiz(Long quizId, Long year, String nth, String question, String image, String isCorrect) {
+    public Quiz updateQuiz(Long quizId, RequestQuizDto quizDto) {
         return null;
     }
 
@@ -47,4 +47,19 @@ public class QuizServiceImpl implements QuizService {
     public void deleteQuiz(Long quizId) {
     }
 
+    public Quiz save(RequestQuizDto quizDto) {
+        Quiz quiz = update(null, quizDto);
+        return quizJpaRepository.save(quiz);
+    }
+
+    public Quiz update(Long quizId, RequestQuizDto quizDto) {
+        return quizJpaRepository.save(Quiz.builder()
+                .quizId(quizId)
+                .year(quizDto.getYear())
+                .nth(quizDto.getNth())
+                .question(quizDto.getQuestion())
+                .image(quizDto.getImage())
+                .isCorrect(quizDto.getIsCorrect())
+                .build());
+    }
 }

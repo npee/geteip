@@ -33,9 +33,7 @@ public class QuizController {
 
     @GetMapping("/{quizId}")
     public SingleResult<Quiz> getSelectedQuiz(@PathVariable Long quizId) {
-
-        Quiz quiz = quizJpaRepository.findById(quizId).orElseThrow(CustomQuizNotExistsException::new);
-        return responseService.getSingleResult(quiz);
+        return responseService.getSingleResult(quizService.selectAQuiz(quizId));
     }
 
     @PostMapping

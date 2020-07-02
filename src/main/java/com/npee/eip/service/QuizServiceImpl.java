@@ -1,5 +1,6 @@
 package com.npee.eip.service;
 
+import com.npee.eip.advice.exception.CustomQuizNotExistsException;
 import com.npee.eip.advice.exception.CustomQuizTableEmptyException;
 import com.npee.eip.model.entity.Quiz;
 import com.npee.eip.repository.QuizJpaRepository;
@@ -34,7 +35,7 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public Quiz selectAQuiz(Long quizId) {
-        return null;
+        return quizJpaRepository.findById(quizId).orElseThrow(CustomQuizNotExistsException::new);
     }
 
     @Override

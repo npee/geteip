@@ -1,6 +1,7 @@
 package com.npee.eip.controller;
 
 import com.npee.eip.advice.exception.CustomQuizNotExistsException;
+import com.npee.eip.config.response.CommonResult;
 import com.npee.eip.config.response.ListResult;
 import com.npee.eip.config.response.ResponseService;
 import com.npee.eip.config.response.SingleResult;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Api(tags = {"2. Quiz"})
 @RestController
-@RequestMapping("/v1/quiz")
+@RequestMapping("/v1/quizzes")
 @RequiredArgsConstructor
 @Slf4j
 public class QuizController {
@@ -29,10 +30,10 @@ public class QuizController {
         return responseService.getListResult(quizList);
     }
 
-    @GetMapping("/{id}")
-    public SingleResult<Quiz> getSelectedQuiz(@PathVariable Long id) {
+    @GetMapping("/{quizId}")
+    public SingleResult<Quiz> getSelectedQuiz(@PathVariable Long quizId) {
 
-        Quiz quiz = quizJpaRepository.findById(id).orElseThrow(CustomQuizNotExistsException::new);
+        Quiz quiz = quizJpaRepository.findById(quizId).orElseThrow(CustomQuizNotExistsException::new);
         return responseService.getSingleResult(quiz);
     }
 
@@ -54,7 +55,7 @@ public class QuizController {
     public SingleResult<Quiz> updateQuiz(@PathVariable Long quizId,
                                          @RequestParam Long year,
                                          @RequestParam String nth) {
-        // 수정
+
         Quiz quiz = Quiz.builder()
                 .quizId(quizId)
                 .year(year)
@@ -65,5 +66,12 @@ public class QuizController {
                 .build();
         quizJpaRepository.save(quiz);
         return responseService.getSingleResult(quiz);
+    }
+
+    @DeleteMapping("/{quizId}")
+    public CommonResult deleteQuiz(@PathVariable Long quizId) {
+        quizJpaRepository.findById(quizId).orElseThrow(CustomQuizNotExistsException::new);
+        quizJpaRepository.deleteById(quizId);
+        return responseService.getSuccessResult();
     }
 }

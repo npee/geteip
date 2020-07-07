@@ -27,6 +27,9 @@ public class Quiz extends BaseTime {
     @Column(nullable = false)
     private String nth;
 
+    @Column(nullable = false)
+    private Long subjectId;
+
     @Column(nullable = false, length = 100)
     private String question;
 
@@ -44,10 +47,6 @@ public class Quiz extends BaseTime {
 
     @OneToOne(mappedBy = "commentFromQuiz")
     private Comment quizFromComment;
-
-    @ManyToOne
-    @JoinColumn(name = "SUBJECT_NO")
-    private Subject quizFromSubject;
 
     @OneToMany(mappedBy = "itemFromQuiz")
     private List<Item> items;

@@ -19,11 +19,11 @@ public class RequestQuizDto {
     private String image;
     private String isCorrect;
     // 과목 번호
-    private Long subjectNo;
+    private Long subjectId;
     // 보기 리스트
     private List<Item> itemList;
-    // 해설
-    private Comment comment;
+    // 해설 번호
+    private Comment tempComment;
 
     public Quiz toEntity() {
         return Quiz.builder()

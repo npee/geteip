@@ -23,7 +23,4 @@ public class Subject {
     @Column
     private String subject;
 
-    @OneToMany(mappedBy = "quizFromSubject")
-    private List<Quiz> quizzes;
-
 }

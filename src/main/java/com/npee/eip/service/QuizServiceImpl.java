@@ -5,6 +5,7 @@ import com.npee.eip.advice.exception.CustomQuizTableEmptyException;
 import com.npee.eip.model.entity.Quiz;
 import com.npee.eip.model.request.RequestQuizDto;
 import com.npee.eip.repository.QuizJpaRepository;
+import com.npee.eip.repository.SubjectJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.List;
 public class QuizServiceImpl implements QuizService {
 
     private final QuizJpaRepository quizJpaRepository;
+    private final SubjectJpaRepository subjectJpaRepository;
 
     @Override
     public Quiz insertQuiz(RequestQuizDto quizDto) {
@@ -58,6 +60,7 @@ public class QuizServiceImpl implements QuizService {
                 .quizId(quizId)
                 .year(quizDto.getYear())
                 .nth(quizDto.getNth())
+                .subjectId(quizDto.getSubjectId())
                 .question(quizDto.getQuestion())
                 .image(quizDto.getImage())
                 .isCorrect(quizDto.getIsCorrect())

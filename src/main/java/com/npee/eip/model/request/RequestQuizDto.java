@@ -1,9 +1,13 @@
 package com.npee.eip.model.request;
 
+import com.npee.eip.model.entity.Comment;
+import com.npee.eip.model.entity.Item;
 import com.npee.eip.model.entity.Quiz;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,6 +18,12 @@ public class RequestQuizDto {
     private String question;
     private String image;
     private String isCorrect;
+    // 과목 번호
+    private Long subjectNo;
+    // 보기 리스트
+    private List<Item> itemList;
+    // 해설
+    private Comment comment;
 
     public Quiz toEntity() {
         return Quiz.builder()

@@ -16,9 +16,6 @@ public class Item {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemId;
 
-    @Column(nullable = false)
-    private Long itemNo;
-
     @Column(nullable = false, length = 100)
     private String choice;
 

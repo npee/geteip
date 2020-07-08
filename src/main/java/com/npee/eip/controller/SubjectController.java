@@ -22,17 +22,14 @@ public class SubjectController {
 
     private final ResponseService responseService;
     private final SubjectServiceImpl subjectService;
-    private final SubjectJpaRepository subjectJpaRepository;
 
     @GetMapping
     public ListResult<Subject> getSubjectList() {
         return responseService.getListResult(subjectService.selectSubjects());
     }
-
-    // TODO: 로직을 서비스 내부로 이동
-    @GetMapping("/{subjectNo}")
-    public SingleResult<Subject> getSelectedSubject(@PathVariable Long subjectNo) {
-        Subject subject = subjectJpaRepository.findById(subjectNo).orElseThrow(CustomSubjectNotExistsException::new);
-        return responseService.getSingleResult(subject);
+    
+    @GetMapping("/{subjectId}")
+    public SingleResult<Subject> getSelectedSubject(@PathVariable Long subjectId) {
+        return responseService.getSingleResult(subjectService.selectASubject(subjectId));
     }
 }

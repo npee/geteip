@@ -1,5 +1,6 @@
 package com.npee.eip.service;
 
+import com.npee.eip.advice.exception.CustomSubjectNotExistsException;
 import com.npee.eip.model.entity.Subject;
 import com.npee.eip.model.request.RequestQuizDto;
 import com.npee.eip.repository.SubjectJpaRepository;
@@ -27,7 +28,7 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public Subject selectASubject(Long subjectId) {
-        return null;
+        return subjectJpaRepository.findById(subjectId).orElseThrow(CustomSubjectNotExistsException::new);
     }
 
     @Override

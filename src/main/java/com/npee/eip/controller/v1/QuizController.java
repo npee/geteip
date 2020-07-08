@@ -1,4 +1,4 @@
-package com.npee.eip.controller;
+package com.npee.eip.controller.v1;
 
 import com.npee.eip.config.response.CommonResult;
 import com.npee.eip.config.response.ListResult;
@@ -7,7 +7,7 @@ import com.npee.eip.config.response.SingleResult;
 import com.npee.eip.model.entity.Quiz;
 import com.npee.eip.model.request.RequestQuizDto;
 import com.npee.eip.service.QuizServiceImpl;
-import io.swagger.annotations.Api;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -23,27 +23,34 @@ public class QuizController {
     private final ResponseService responseService;
     private final QuizServiceImpl quizService;
 
+    @ApiOperation(value = "퀴즈 목록 출력", notes = "모든 퀴즈 목록을 조회한다.")
     @GetMapping
     public ListResult<Quiz> getQuizList() {
         return responseService.getListResult(quizService.selectQuizzes());
     }
 
+    @ApiOperation(value = "퀴즈 단일 출력", notes = "퀴즈 하나를 조회한다.")
     @GetMapping("/{quizId}")
     public SingleResult<Quiz> getSelectedQuiz(@PathVariable Long quizId) {
         return responseService.getSingleResult(quizService.selectAQuiz(quizId));
     }
 
+    @ApiOperation(value = "퀴즈 입력", notes = "퀴즈 하나를 등록한다.")
     @PostMapping
-    public SingleResult<Quiz> setQuiz(@RequestBody RequestQuizDto quizDto) {
+    public SingleResult<Quiz> setQuiz(
+            @ApiParam(value = "퀴즈 내용", required = true) @RequestBody RequestQuizDto quizDto) {
         return responseService.getSingleResult(quizService.insertQuiz(quizDto));
     }
 
+    @ApiOperation(value = "퀴즈 수정", notes = "퀴즈 하나를 수정한다.")
     @PutMapping("/{quizId}")
-    public SingleResult<Quiz> updateQuiz(@PathVariable Long quizId,
-                                         @RequestBody RequestQuizDto quizDto) {
+    public SingleResult<Quiz> updateQuiz(
+            @PathVariable Long quizId,
+            @ApiParam(value = "퀴즈 내용", required = true) @RequestBody RequestQuizDto quizDto) {
         return responseService.getSingleResult(quizService.updateQuiz(quizId, quizDto));
     }
 
+    @ApiOperation(value = "퀴즈 제거", notes = "퀴즈 하나를 삭제한다.")
     @DeleteMapping("/{quizId}")
     public CommonResult deleteQuiz(@PathVariable Long quizId) {
         quizService.deleteQuiz(quizId);

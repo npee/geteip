@@ -1,13 +1,12 @@
-package com.npee.eip.controller;
+package com.npee.eip.controller.v1;
 
-import com.npee.eip.advice.exception.CustomSubjectNotExistsException;
 import com.npee.eip.config.response.ListResult;
 import com.npee.eip.config.response.ResponseService;
 import com.npee.eip.config.response.SingleResult;
 import com.npee.eip.model.entity.Subject;
-import com.npee.eip.repository.SubjectJpaRepository;
 import com.npee.eip.service.SubjectServiceImpl;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +22,13 @@ public class SubjectController {
     private final ResponseService responseService;
     private final SubjectServiceImpl subjectService;
 
+    @ApiOperation(value = "과목 전체 목록 출력", notes = "과목 전체를 조회한다.")
     @GetMapping
     public ListResult<Subject> getSubjectList() {
         return responseService.getListResult(subjectService.selectSubjects());
     }
-    
+
+    @ApiOperation(value = "과목 단일 출력", notes = "과목 하나를 조회한다.")
     @GetMapping("/{subjectId}")
     public SingleResult<Subject> getSelectedSubject(@PathVariable Long subjectId) {
         return responseService.getSingleResult(subjectService.selectASubject(subjectId));

@@ -29,3 +29,6 @@ quizTableEmpty:
 subjectNotExists:
   code: "-3000"
   message: "존재하지 않는 과목입니다."
+itemNotExists:
+  code: "4000"
+  message: "존재하지 않는 보기입니다."

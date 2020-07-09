@@ -29,3 +29,6 @@ quizTableEmpty:
 subjectNotExists:
   code: "-3000"
   message: "The subject does NOT exist."
+itemNotExists:
+  code: "4000"
+  message: "The item does NOT exist."

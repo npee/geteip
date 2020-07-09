@@ -1,9 +1,6 @@
 package com.npee.eip.advice;
 
-import com.npee.eip.advice.exception.CustomItemNotExistsException;
-import com.npee.eip.advice.exception.CustomQuizNotExistsException;
-import com.npee.eip.advice.exception.CustomQuizTableEmptyException;
-import com.npee.eip.advice.exception.CustomSubjectNotExistsException;
+import com.npee.eip.advice.exception.*;
 import com.npee.eip.config.response.CommonResult;
 import com.npee.eip.config.response.ResponseService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +35,7 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(CustomQuizTableEmptyException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected CommonResult quizNotExistsException(HttpServletRequest request, CustomQuizTableEmptyException e) {
+    protected CommonResult quizTableEmptyException(HttpServletRequest request, CustomQuizTableEmptyException e) {
         return responseService.getFailResult(Integer.parseInt(getMessage("quizTableEmpty.code")), getMessage("quizTableEmpty.message"));
     }
 
@@ -52,6 +49,12 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult itemNotExistsException(HttpServletRequest request, CustomItemNotExistsException e) {
         return responseService.getFailResult(Integer.parseInt(getMessage("itemNotExists.code")), getMessage("itemNotExists.message"));
+    }
+
+    @ExceptionHandler(CustomItemTableEmptyException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult itemTableEmptyException(HttpServletRequest request, CustomItemTableEmptyException e) {
+        return responseService.getFailResult(Integer.parseInt(getMessage("itemTableEmpty.code")), getMessage("itemTableEmpty.message"));
     }
 
     private String getMessage(String code) {

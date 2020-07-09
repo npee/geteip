@@ -25,10 +25,13 @@ quizNotExists:
   message: "The quiz does NOT exist."
 quizTableEmpty:
   code: "-2001"
-  message: "Quiz table is empty"
+  message: "Quiz table is empty."
 subjectNotExists:
   code: "-3000"
   message: "The subject does NOT exist."
 itemNotExists:
   code: "4000"
   message: "The item does NOT exist."
+itemTableEmpty:
+  code: "4001"
+  message: "Item table is empty."

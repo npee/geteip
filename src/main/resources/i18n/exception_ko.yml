@@ -32,3 +32,6 @@ subjectNotExists:
 itemNotExists:
   code: "4000"
   message: "존재하지 않는 보기입니다."
+itemTableEmpty:
+  code: "4001"
+  message: "보기 테이블이 비어있습니다."

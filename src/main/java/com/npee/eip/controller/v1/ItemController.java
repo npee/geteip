@@ -28,8 +28,7 @@ public class ItemController {
 
     @GetMapping("/{itemId}")
     public SingleResult<Item> getSelectedItem(@PathVariable Long itemId) {
-        // return responseService.getSingleResult(itemService.selectAItemSet(itemId));
-        return null;
+        return responseService.getSingleResult(itemService.selectAItemSet(itemId));
     }
 
     @PostMapping

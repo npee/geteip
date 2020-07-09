@@ -1,5 +1,6 @@
 package com.npee.eip.service;
 
+import com.npee.eip.advice.exception.CustomItemNotExistsException;
 import com.npee.eip.model.entity.Item;
 import com.npee.eip.model.request.RequestQuizDto;
 import com.npee.eip.repository.ItemJpaRepository;
@@ -29,8 +30,7 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     public Item selectAItemSet(Long itemId) {
-        // return itemJpaRepository.findById(itemId);
-        return null;
+        return itemJpaRepository.findById(itemId).orElseThrow(CustomItemNotExistsException::new);
     }
 
     @Override

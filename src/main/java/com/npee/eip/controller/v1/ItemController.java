@@ -23,8 +23,7 @@ public class ItemController {
 
     @GetMapping
     public ListResult<Item> getItemList() {
-        // return responseService.getListResult(itemService.selectItemSets());
-        return null;
+        return responseService.getListResult(itemService.selectItemSets());
     }
 
     @GetMapping("/{itemId}")

@@ -1,10 +1,10 @@
 package com.npee.eip.service;
 
 import com.npee.eip.advice.exception.CustomItemNotExistsException;
+import com.npee.eip.advice.exception.CustomItemTableEmptyException;
 import com.npee.eip.model.entity.Item;
 import com.npee.eip.model.request.RequestQuizDto;
 import com.npee.eip.repository.ItemJpaRepository;
-import com.npee.eip.repository.QuizJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,12 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     public List<Item> selectItemSets() {
-        return itemJpaRepository.findAll();
+        List<Item> items = itemJpaRepository.findAll();
+        if (items.isEmpty()) {
+            throw new CustomItemTableEmptyException();
+        } else {
+            return items;
+        }
     }
 
     @Override

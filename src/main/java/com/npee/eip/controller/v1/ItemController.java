@@ -4,6 +4,7 @@ import com.npee.eip.config.response.ListResult;
 import com.npee.eip.config.response.ResponseService;
 import com.npee.eip.config.response.SingleResult;
 import com.npee.eip.model.entity.Item;
+import com.npee.eip.model.request.RequestItemDto;
 import com.npee.eip.service.ItemServiceImpl;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +33,8 @@ public class ItemController {
     }
 
     @PostMapping
-    public SingleResult<Item> setItem() {
-        // return responseService.getSingleResult(itemService.insertItemSet());
-        return null;
+    public SingleResult<Item> setItem(@RequestBody RequestItemDto itemDto) {
+        return responseService.getSingleResult(itemService.insertItemSet(itemDto));
     }
 
     @PutMapping("/{itemId}")

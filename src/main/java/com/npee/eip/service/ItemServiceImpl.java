@@ -3,6 +3,7 @@ package com.npee.eip.service;
 import com.npee.eip.advice.exception.CustomItemNotExistsException;
 import com.npee.eip.advice.exception.CustomItemTableEmptyException;
 import com.npee.eip.model.entity.Item;
+import com.npee.eip.model.request.RequestItemDto;
 import com.npee.eip.model.request.RequestQuizDto;
 import com.npee.eip.repository.ItemJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,13 +15,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ItemServiceImpl implements ItemService{
+public class ItemServiceImpl implements ItemService {
 
     private final ItemJpaRepository itemJpaRepository;
 
     @Override
-    public Item insertItemSet(RequestQuizDto quizDto) {
-        return null;
+    public Item insertItemSet(RequestItemDto itemDto) {
+        return save(itemDto);
     }
 
     @Override
@@ -48,14 +49,15 @@ public class ItemServiceImpl implements ItemService{
 
     }
 
-//    public Item builder(RequestQuizDto quizDto, int index) {
-//        Item item = Item.builder()
-//                .choice(quizDto.getItemList().get(index).getChoice())
-//                .isAnswer(quizDto.getItemList().get(index).getIsAnswer())
-//                .build();
-//
-//        log.debug(index + " -th " + quizDto.getItemList().get(index).getChoice() + " item is created");
-//        itemJpaRepository.save(item);
-//        return item;
-//    }
+    private Item save(RequestItemDto itemDto) {
+        return update(null, itemDto);
+    }
+
+    private Item update(Long itemId, RequestItemDto itemDto) {
+        return itemJpaRepository.save(Item.builder()
+                .itemId(itemId)
+                .choice(itemDto.getChoice())
+                .isAnswer(itemDto.getIsAnswer())
+                .build());
+    }
 }

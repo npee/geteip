@@ -1,5 +1,6 @@
 package com.npee.eip.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class Item {
 
     @ManyToOne
     @JoinColumn(name = "QUIZ_ID")
+    @JsonBackReference
     private Quiz itemFromQuiz;
 
 }

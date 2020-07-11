@@ -1,5 +1,6 @@
 package com.npee.eip.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.npee.eip.model.entity.common.BaseTime;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -49,6 +50,7 @@ public class Quiz extends BaseTime {
     private Comment quizFromComment;
 
     @OneToMany(mappedBy = "itemFromQuiz")
+    @JsonManagedReference
     private List<Item> items;
 
 }

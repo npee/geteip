@@ -2,10 +2,12 @@ package com.npee.eip.service;
 
 import com.npee.eip.advice.exception.CustomItemNotExistsException;
 import com.npee.eip.advice.exception.CustomItemTableEmptyException;
+import com.npee.eip.advice.exception.CustomQuizNotExistsException;
 import com.npee.eip.model.entity.Item;
+import com.npee.eip.model.entity.Quiz;
 import com.npee.eip.model.request.RequestItemDto;
-import com.npee.eip.model.request.RequestQuizDto;
 import com.npee.eip.repository.ItemJpaRepository;
+import com.npee.eip.repository.QuizJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import java.util.List;
 public class ItemServiceImpl implements ItemService {
 
     private final ItemJpaRepository itemJpaRepository;
+    private final QuizJpaRepository quizJpaRepository;
 
     @Override
     public Item insertItemSet(RequestItemDto itemDto) {
@@ -40,7 +43,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item updateItemSet(Long itemId, RequestQuizDto quizDto) {
+    public Item updateItemSet(Long itemId, RequestItemDto itemDto) {
         return null;
     }
 
@@ -54,10 +57,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     private Item update(Long itemId, RequestItemDto itemDto) {
+        Quiz quiz = quizJpaRepository.findById(itemDto.getQuizId()).orElseThrow(CustomQuizNotExistsException::new);
         return itemJpaRepository.save(Item.builder()
                 .itemId(itemId)
                 .choice(itemDto.getChoice())
                 .isAnswer(itemDto.getIsAnswer())
+                .itemFromQuiz(quiz)
                 .build());
     }
 }

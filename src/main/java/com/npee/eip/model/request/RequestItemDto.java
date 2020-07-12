@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class RequestItemDto {
-    // private Long quizId;
+    private Long quizId;
     private String choice;
     private String isAnswer;
 }

@@ -4,8 +4,8 @@ import com.npee.eip.advice.exception.CustomQuizNotExistsException;
 import com.npee.eip.advice.exception.CustomQuizTableEmptyException;
 import com.npee.eip.model.entity.Quiz;
 import com.npee.eip.model.request.RequestQuizDto;
+import com.npee.eip.repository.ItemJpaRepository;
 import com.npee.eip.repository.QuizJpaRepository;
-import com.npee.eip.repository.SubjectJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.List;
 public class QuizServiceImpl implements QuizService {
 
     private final QuizJpaRepository quizJpaRepository;
-    private final SubjectJpaRepository subjectJpaRepository;
+    // private final ItemJpaRepository itemJpaRepository;
 
     @Override
     public Quiz insertQuiz(RequestQuizDto quizDto) {
@@ -56,7 +56,7 @@ public class QuizServiceImpl implements QuizService {
     }
 
     private Quiz update(Long quizId, RequestQuizDto quizDto) {
-        return quizJpaRepository.save(Quiz.builder()
+        Quiz quiz = Quiz.builder()
                 .quizId(quizId)
                 .year(quizDto.getYear())
                 .nth(quizDto.getNth())
@@ -64,6 +64,8 @@ public class QuizServiceImpl implements QuizService {
                 .question(quizDto.getQuestion())
                 .image(quizDto.getImage())
                 .isCorrect(quizDto.getIsCorrect())
-                .build());
+                .build();
+        quizDto.getItems().forEach(item -> quiz.addItem(item.getChoice(), item.getIsAnswer()));
+        return quizJpaRepository.save(quiz);
     }
 }

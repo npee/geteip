@@ -2,6 +2,7 @@ package com.npee.eip.service;
 
 import com.npee.eip.advice.exception.CustomQuizNotExistsException;
 import com.npee.eip.advice.exception.CustomQuizTableEmptyException;
+import com.npee.eip.model.entity.Item;
 import com.npee.eip.model.entity.Quiz;
 import com.npee.eip.model.request.RequestQuizDto;
 import com.npee.eip.repository.ItemJpaRepository;
@@ -18,7 +19,7 @@ import java.util.List;
 public class QuizServiceImpl implements QuizService {
 
     private final QuizJpaRepository quizJpaRepository;
-    // private final ItemJpaRepository itemJpaRepository;
+    private final ItemJpaRepository itemJpaRepository;
 
     @Override
     public Quiz insertQuiz(RequestQuizDto quizDto) {
@@ -52,7 +53,9 @@ public class QuizServiceImpl implements QuizService {
     }
 
     private Quiz save(RequestQuizDto quizDto) {
-        return quizJpaRepository.save(update(null, quizDto));
+        Quiz quiz = update(null, quizDto);
+        quizDto.getItems().forEach(item -> quiz.addItem(item.getChoice(), item.getIsAnswer()));
+        return quizJpaRepository.save(quiz);
     }
 
     private Quiz update(Long quizId, RequestQuizDto quizDto) {
@@ -65,7 +68,16 @@ public class QuizServiceImpl implements QuizService {
                 .image(quizDto.getImage())
                 .isCorrect(quizDto.getIsCorrect())
                 .build();
-        quizDto.getItems().forEach(item -> quiz.addItem(item.getChoice(), item.getIsAnswer()));
+        if (quizId != null) {
+            quizDto.getItems().forEach(item -> {
+                itemJpaRepository.save(Item.builder()
+                        .itemId(item.getItemId())
+                        .choice(item.getChoice())
+                        .isAnswer(item.getIsAnswer())
+                        .itemFromQuiz(quizJpaRepository.findById(quizId).orElseThrow(CustomQuizNotExistsException::new))
+                        .build());
+            });
+        }
         return quizJpaRepository.save(quiz);
     }
 }

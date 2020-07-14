@@ -28,4 +28,9 @@ public class Item {
     @JsonBackReference
     private Quiz itemFromQuiz;
 
+    public Item(String choice, String isAnswer, Quiz itemFromQuiz) {
+        this.choice = choice;
+        this.isAnswer = isAnswer;
+        this.itemFromQuiz = itemFromQuiz;
+    }
 }

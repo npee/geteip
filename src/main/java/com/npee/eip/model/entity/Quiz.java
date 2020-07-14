@@ -3,11 +3,13 @@ package com.npee.eip.model.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.npee.eip.model.entity.common.BaseTime;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -17,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "quizzes")
+@Slf4j
 public class Quiz extends BaseTime {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,8 +52,11 @@ public class Quiz extends BaseTime {
     @OneToOne(mappedBy = "commentFromQuiz")
     private Comment quizFromComment;
 
-    @OneToMany(mappedBy = "itemFromQuiz")
+    @OneToMany(mappedBy = "itemFromQuiz", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Item> items;
+    private final List<Item> items = new ArrayList<>();
 
+    public void addItem(String choice, String isAnswer) {
+        items.add(new Item(choice, isAnswer, this));
+    }
 }

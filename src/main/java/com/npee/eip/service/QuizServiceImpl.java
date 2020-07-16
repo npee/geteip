@@ -28,6 +28,11 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    public Long countQuiz(Long year, String nth, Long subjectId) {
+        return quizJpaRepository.countByYearAndNthAndSubjectId(year, nth, subjectId);
+    }
+
+    @Override
     public List<Quiz> selectQuizzes()  {
         List<Quiz> quizList = quizJpaRepository.findAll();
         if (quizList.isEmpty()) {

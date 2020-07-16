@@ -9,6 +9,7 @@ public interface QuizService {
     Quiz insertQuiz(RequestQuizDto quizDto);
     List<Quiz> selectQuizzes();
     Quiz selectAQuiz(Long quizId);
+    Long countQuiz(Long year, String nth, Long subjectId);
     Quiz updateQuiz(Long quizId, RequestQuizDto quizDto);
     void deleteQuiz(Long quizId);
 }

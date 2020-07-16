@@ -35,6 +35,14 @@ public class QuizController {
         return responseService.getSingleResult(quizService.selectAQuiz(quizId));
     }
 
+    @ApiOperation(value = "퀴즈 개수 출력", notes = "특정 회차의 과목에 등록된 퀴즈의 개수를 조회한다.")
+    @GetMapping("/count")
+    public SingleResult<Long> findQuizzesByYearAndNthAndSubjectId(@RequestParam Long year,
+                                                                  @RequestParam String nth,
+                                                                  @RequestParam Long subjectId) {
+        return responseService.getSingleResult(quizService.countQuiz(year, nth, subjectId));
+    }
+
     @ApiOperation(value = "퀴즈 입력", notes = "퀴즈 하나를 등록한다.")
     @PostMapping
     public SingleResult<Quiz> setQuiz(

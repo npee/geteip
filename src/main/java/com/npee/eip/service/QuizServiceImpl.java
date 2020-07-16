@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -68,14 +69,17 @@ public class QuizServiceImpl implements QuizService {
                 .image(quizDto.getImage())
                 .build();
         if (quizId != null) {
-            quizDto.getItems().forEach(item -> {
-                itemJpaRepository.save(Item.builder()
+            List<Item> items = new ArrayList<>();
+            Quiz myQuiz = quizJpaRepository.findById(quizId).orElseThrow(CustomQuizNotExistsException::new);
+            quizDto.getItems().forEach(item ->
+                items.add(Item.builder()
                         .itemId(item.getItemId())
                         .choice(item.getChoice())
                         .isAnswer(item.getIsAnswer())
-                        .itemFromQuiz(quizJpaRepository.findById(quizId).orElseThrow(CustomQuizNotExistsException::new))
-                        .build());
-            });
+                        .itemFromQuiz(myQuiz)
+                        .build())
+            );
+            itemJpaRepository.saveAll(items);
         }
         return quizJpaRepository.save(quiz);
     }

@@ -66,7 +66,6 @@ public class QuizServiceImpl implements QuizService {
                 .subjectId(quizDto.getSubjectId())
                 .question(quizDto.getQuestion())
                 .image(quizDto.getImage())
-                .isCorrect(quizDto.getIsCorrect())
                 .build();
         if (quizId != null) {
             quizDto.getItems().forEach(item -> {

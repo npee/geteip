@@ -40,9 +40,6 @@ public class Quiz extends BaseTime {
     @Column(nullable = true)
     private String image;
 
-    @Column(nullable = false)
-    private String isCorrect;
-
     // @Column(nullable = false)
     // private Long countCorrect;
 

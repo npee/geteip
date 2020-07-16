@@ -18,7 +18,6 @@ public class RequestQuizDto {
     private String nth;
     private String question;
     private String image;
-    private String isCorrect;
     // 과목 번호
     private Long subjectId;
     // 보기 리스트

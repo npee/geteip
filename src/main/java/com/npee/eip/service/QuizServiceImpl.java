@@ -5,6 +5,7 @@ import com.npee.eip.advice.exception.CustomQuizTableEmptyException;
 import com.npee.eip.model.entity.Item;
 import com.npee.eip.model.entity.Quiz;
 import com.npee.eip.model.request.RequestQuizDto;
+import com.npee.eip.model.response.ResponseQuizCountDto;
 import com.npee.eip.repository.ItemJpaRepository;
 import com.npee.eip.repository.QuizJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,8 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public Long countQuiz(Long year, String nth, Long subjectId) {
-        return quizJpaRepository.countByYearAndNthAndSubjectId(year, nth, subjectId);
+    public List<ResponseQuizCountDto> countByYearAndNthAndSubjectIdAtSelectedAllQuiz() {
+        return quizJpaRepository.selectQuizCountByYearAndNthAndSubjectId();
     }
 
     @Override

@@ -10,6 +10,8 @@ import com.npee.eip.repository.ItemJpaRepository;
 import com.npee.eip.repository.QuizJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -36,6 +38,16 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public List<Quiz> selectQuizzes()  {
         List<Quiz> quizList = quizJpaRepository.findAll();
+        if (quizList.isEmpty()) {
+            throw new CustomQuizTableEmptyException();
+        } else {
+            return quizList;
+        }
+    }
+
+    @Override
+    public Page<Quiz> retrieveQuizzes(Pageable pageable) {
+        Page<Quiz> quizList = quizJpaRepository.findAll(pageable);
         if (quizList.isEmpty()) {
             throw new CustomQuizTableEmptyException();
         } else {

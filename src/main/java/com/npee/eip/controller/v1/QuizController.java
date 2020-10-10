@@ -1,9 +1,6 @@
 package com.npee.eip.controller.v1;
 
-import com.npee.eip.config.response.CommonResult;
-import com.npee.eip.config.response.ListResult;
-import com.npee.eip.config.response.ResponseService;
-import com.npee.eip.config.response.SingleResult;
+import com.npee.eip.config.response.*;
 import com.npee.eip.model.entity.Quiz;
 import com.npee.eip.model.request.RequestQuizDto;
 import com.npee.eip.model.response.ResponseQuizCountDto;
@@ -11,6 +8,7 @@ import com.npee.eip.service.QuizServiceImpl;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = {"2. Quiz"})
@@ -28,6 +26,22 @@ public class QuizController {
     @GetMapping
     public ListResult<Quiz> getQuizList() {
         return responseService.getListResult(quizService.selectQuizzes());
+    }
+
+    @ApiOperation(value = "조건에 맞는 퀴즈 목록 출력", notes = "조건에 맞는 퀴즈 목록을 조회한다.")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
+                    value = "Results page you want to retrieve (0..N)"),
+            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
+                    value = "Number of records per page."),
+            @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
+                    value = "Sorting criteria in the format: property(,asc|desc). " +
+                            "Default sort order is ascending. " +
+                            "Multiple sort criteria are supported.")
+    })
+    @GetMapping("/page")
+    public PageResult<Quiz> getRetrieveQuizList(final Pageable pageable) {
+        return responseService.getPageResult(quizService.retrieveQuizzes(pageable));
     }
 
     @ApiOperation(value = "퀴즈 단일 출력", notes = "퀴즈 하나를 조회한다.")

@@ -1,6 +1,7 @@
 package com.npee.eip.config.response;
 
 import lombok.Getter;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class ResponseService {
             this.message = message;
         }
     }
+
     public <T> SingleResult<T> getSingleResult(T data) {
         SingleResult<T> result = new SingleResult<>();
         result.setData(data);
@@ -28,10 +30,16 @@ public class ResponseService {
         return result;
     }
 
-
     public <T> ListResult<T> getListResult(List<T> list) {
         ListResult<T> result = new ListResult<>();
         result.setList(list);
+        setSuccessResult(result);
+        return result;
+    }
+
+    public <T> PageResult<T> getPageResult(Page<T> pages) {
+        PageResult<T> result = new PageResult<>();
+        result.setPages(pages);
         setSuccessResult(result);
         return result;
     }
